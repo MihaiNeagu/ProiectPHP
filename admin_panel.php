@@ -1,4 +1,5 @@
 <?php include 'header/header.php';
+redirect_if_logged_out();
 if (!logged_in () || $user_data['usertype'] != 'administrator') header('Location: index.php');
 $useri = mysql_query("select * from users");
 

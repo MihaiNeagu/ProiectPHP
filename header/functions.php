@@ -1,7 +1,14 @@
 <?php	
-
-	function render_product_for_admin ($id,$name,$price,$description,$image)
+	
+	function redirect_if_logged_out ()
 	{
+		if (!logged_in ()) header('Location: index.php');
+	}
+	
+	function render_product_for_admin ($id,$name,$price,$description,$image,$quantity)
+	{
+			$quantity_display = ($quantity > 0) ? "<h5 class = 'text-success'>Exista in stoc ".$quantity. " produse !</h5>"
+												: "<h5 class = 'text-error'>Nu mai exista in stoc !</h5>";
 			echo'<ul class="thumbnails">
   					<li style = "padding-right:10;"  class="span4">
   						<div class = "thumbnail">
@@ -9,24 +16,32 @@
 		      				<img width = "360" height ="270" src = "'.$image.'" alt = "Imagine Produs" />
 		    				</a>
 			    			<h3>'.$name.'</h3> <h4>'.$price.' RON</h4></br>
+			    			'.$quantity_display.'</br>
 			    			<p>'.$description.'</p>
 			      			<a href = "edit_product.php?product_id='.$id.'"><input type = "button" class = "btn btn-info" value = "Edit"></a>
 			      			<a href = "delete_product.php?product_id='.$id.'"><input type = "button" class = "btn btn-danger" value = "Delete"></a>
 		      			</div>
   					</li>';
   	}
-	function render_product ($id,$name,$price,$description,$image)
+	function render_product ($id,$name,$price,$description,$image,$quantity)
 	{
+		$quantity_display = ($quantity > 0) ? "<h5 class = 'text-success'>Exista in stoc ".$quantity. " produse !</h5>"
+												: "<h5 class = 'text-error'>Nu mai exista in stoc !</h5>";
 		echo (logged_in()) ? 
-				'<ul class="thumbnails">
+				'<form action = "buy.php" method = "POST">
+				<ul class="thumbnails">
   					<li style = "padding-right:10;"  class="span4">
   						<div class = "thumbnail">
 		    				<a href="#" class="thumbnail">
 		      				<img width = "360" height ="270" src = "'.$image.'" alt = "Imagine Produs" />
 		    				</a>
+		    				<input type = "hidden" name = "product_id" value = "'.$id.'" />
 			    			<h3>'.$name.'</h3> <h4>'.$price.' RON</h4></br>
+			    			'.$quantity_display.'</br>
 			    			<p>'.$description.'</p>
-			      			<a href = "buy.php?product_id='.$id.'"><input type = "button" class = "btn btn-primary" value = "Buy"></a>
+			    			<input type = "text" name = "quantity" value = "1" />
+			    			<input type = "submit" class = "btn btn-primary" value = "Buy" />
+			      			<!-- <a href = "buy.php?product_id='.$id.'"><input type = "button" class = "btn btn-primary" value = "Buy"></a> -->
 			      			<input type = "button" class = "btn btn-info" value = "Info">
 		      			</div>
   					</li>' : 

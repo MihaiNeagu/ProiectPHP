@@ -1,4 +1,6 @@
-<?php include "header/header.php"; ?>
+<?php include "header/header.php";
+redirect_if_logged_out();
+ ?>
 
 <?php 
 	if (isset($_GET["product_id"]) && !empty($_GET["product_id"])) 

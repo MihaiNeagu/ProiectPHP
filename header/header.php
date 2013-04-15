@@ -10,7 +10,7 @@
 					<div class="page-header">
 	  					<h1>
 	  						<div class = "row">
-		  						<div class = "span7">Magazin on-line</div>
+		  						<div class = "span7"><a href="index.php"><img src="img/special/logo.jpg" /></a></div>
 		  						<div class = "span5"><h5>
 		  						<?php include 'login_form.php'; ?>
 		  						</h5></div>

@@ -1,5 +1,5 @@
 <?php include 'header/header.php';
-if (!logged_in ()) header('Location: index.php');
+redirect_if_logged_out();
 if (!isset($_GET) || sizeof($_GET) == 0) $page_valid = false; 
 $edit_data = get_user_data ($_SESSION['user_id'],'last_name','first_name','email','password'); ?>
 
@@ -73,6 +73,7 @@ $num = 0;
 						<td><b>#</b></td>
 						<td><b>Nume</b></td>
 						<td><b>Pret</b></td>
+						<td><b>Cantitate</b></td>
 						<td><b>Actiune</b></td>
 					</th>';
     	while ($row = mysql_fetch_assoc($result))
@@ -83,6 +84,7 @@ $num = 0;
 					<td>'.$num.'</td>
 					<td>'.$row["name"].'</td>
 					<td>'.$row["price"].'</td>
+					<td>'.$row["quantity"].'</td>
 					<td><a href = "profile_panel.php?id='.$row["id_tranzactie"].'">Renunta</a></td>
 				  	</tr>';
 		}
@@ -95,6 +97,9 @@ $num = 0;
 	if (isset($_GET) && !empty($_GET))
 		if (!empty($_GET['id']))
 		{
+			$tranzactie = mysql_fetch_assoc(mysql_query("select * from tranzactii where id_tranzactie = " . $_GET["id"]));
+			$new_quantity = mysql_fetch_assoc(mysql_query("select * from products where id_product = ".  $tranzactie["product_id"]))["quantity"] + $tranzactie["quantity"];
+			mysql_query("update products set quantity = ".$new_quantity." where id_product = ".$tranzactie["product_id"]);
 			mysql_query("delete from tranzactii where id_tranzactie = '".$_GET["id"]."'");
 			header ("Location: profile_panel.php");
 		}

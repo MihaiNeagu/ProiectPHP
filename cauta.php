@@ -73,9 +73,9 @@ if (isset($_GET) && sizeof($_GET) != 0)
 			require 'user_table.php'; */
 			while ($p = mysql_fetch_assoc($result))
 				if ($user_data["usertype"] == "administrator")
-					render_product_for_admin ($p["id_product"],$p["name"],$p["price"],$p["description"],$p["image"]);
+					render_product_for_admin ($p["id_product"],$p["name"],$p["price"],$p["description"],$p["image"],$p["quantity"]);
 				else
-					render_product ($p["id_product"],$p["name"],$p["price"],$p["description"],$p["image"]);
+					render_product ($p["id_product"],$p["name"],$p["price"],$p["description"],$p["image"],$p["quantity"]);
     }
 	
 }

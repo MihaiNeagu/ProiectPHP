@@ -1,5 +1,5 @@
  <?php include "header/header.php";
- if (!logged_in ()) header('Location: index.php');
+ redirect_if_logged_out();
 if (!isset($_POST) || sizeof($_POST) == 0) $page_valid = false;?>
 
 <form class = "form-horizontal" method = "POST" action = "adauga.php" enctype="multipart/form-data">
@@ -34,6 +34,21 @@ if (!isset($_POST) || sizeof($_POST) == 0) $page_valid = false;?>
 	</div>
 
 	<div class = "control-group">
+		<label class = "control-label" for = "quantity">Cantitate</label>
+		<div class = "controls">
+			<input type = "text" id = "quantity" name = "quantity" placeholder = "Cantitate">
+			<?php
+				if (isset($_POST) && sizeof($_POST) != 0)				
+					if (!param_exists_post("quantity"))
+					{
+						validation_error('Este obligatoriu sa fixati o cantitate !');
+						$page_valid = false;
+					}
+			?>
+		</div>
+	</div>
+
+	<div class = "control-group">
 		<label class = "control-label" for = "descriere">Descriere</label>
 		<div class = "controls">
 			<textarea height = "200" id = "descriere" name = "descriere" placeholder = "Descriere"></textarea>
@@ -57,7 +72,7 @@ if (!isset($_POST) || sizeof($_POST) == 0) $page_valid = false;?>
 <?php
 	if ($page_valid == true)
 	{
-		mysql_query("insert into products(name,price,description,image) values('".$_POST["nume"]."',".$_POST["pret"].",'".$_POST["descriere"]."','".upload_image()."')");
+		mysql_query("insert into products(name,price,description,image,quantity) values('".$_POST["nume"]."',".$_POST["pret"].",'".$_POST["descriere"]."','".upload_image()."','".$_POST["quantity"]."')");
 
 //echo "insert into products(name,price,image) values('".$_POST["nume"]."',".$_POST["pret"].",'".upload_image()."')";
 		

@@ -1,4 +1,6 @@
 <?php
+include "header/functions.php";
+redirect_if_logged_out();
 echo '<br/>
 				<table class = "table table-hover">
 					<th class = "success">

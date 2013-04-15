@@ -1,4 +1,5 @@
 <?php include 'header/header.php';
+redirect_if_logged_out();
 if (!logged_in () || $user_data['usertype'] != 'administrator') header('Location: index.php');
 if (!isset($_GET['username'])) $page_valid = false; 
 $edit_data = get_user_data ($_GET['user_id'],'last_name','first_name','username','email','password');
@@ -114,7 +115,13 @@ $num = 0;
 	
 	if (isset($_GET) && !empty($_GET))
 		if (!empty($_GET['id']))
-			mysql_query("delete from tranzactii where id_tranzactie = '".$_GET["id"]."'");
+			{
+				$tranzactie = mysql_fetch_assoc(mysql_query("select * from tranzactii where id_tranzactie = " . $_GET["id"]));
+				$new_quantity = mysql_fetch_assoc(mysql_query("select * from products where id_product = ". $tranzactie["product_id"]))["quantity"] + $tranzactie["quantity"];
+				mysql_query("update products set quantity = ".$new_quantity." where id_product = ".$tranzactie["product_id"]);
+				mysql_query("delete from tranzactii where id_tranzactie = '".$_GET["id"]."'");
+			
+			}
 
 	//if (!isset($_GET['id']))
 	if ($page_valid == true)

@@ -1,4 +1,5 @@
  <?php include "header/header.php";
+ redirect_if_logged_out();
 if (!logged_in () || $user_data['usertype'] != 'administrator') header('Location: index.php');
 if (!isset($_POST) || sizeof($_POST) == 0) $page_valid = false;
 
@@ -48,6 +49,23 @@ if (isset($_POST["product_id"]))
 	</div>
 
 	<div class = "control-group">
+		<label class = "control-label" for = "quantity">Cantitate</label>
+		<div class = "controls">
+			<input type = "text" id = "quantity" name = "quantity" placeholder = "Cantitate"
+			value = <?php echo '"'.$edit_data["quantity"].'"'; ?>>
+			<?php
+				if (isset($_POST))				
+					//Daca este setat si este empty
+					if (isset ($_POST["quantity"]) && empty($_POST['quantity']))
+					{
+						validation_error('Este obligatoriu sa fixati si o cantitate !');
+						$page_valid = false;
+					}
+			?>
+		</div>
+	</div>
+
+	<div class = "control-group">
 		<label class = "control-label" for = "descriere">Descriere</label>
 		<div class = "controls">
 			<textarea height = "200" id = "descriere" name = "descriere" placeholder = "Descriere"><?php echo $edit_data["description"]; ?></textarea>
@@ -79,6 +97,7 @@ if (isset($_POST["product_id"]))
 		$edit_data['name'] = (empty($_POST['nume'])) ? $edit_data['name'] : $_POST['nume'];
 		$edit_data['price'] = (empty($_POST['pret'])) ? $edit_data['price'] : $_POST['pret'];
 		$edit_data['description'] = (empty($_POST['descriere'])) ? $edit_data['description'] : $_POST['descriere'];
+		$edit_data['quantity'] = (empty($_POST['quantity'])) ? $edit_data['quantity'] : $_POST['quantity'];
 
 		//Tin minte ce returneaza upload_image pentru ca
 		//din varii motive nu pot sa verific conditia
@@ -88,7 +107,7 @@ if (isset($_POST["product_id"]))
 	
 
 //		echo "update products set name = '".$edit_data["name"]."',price = ".$edit_data["price"].",description = '".$edit_data["description"]."', image = '".$edit_data["image"]."'";
-		mysql_query("update products set name = '".$edit_data["name"]."',price = ".$edit_data["price"].",description = '".$edit_data["description"]."', image = '".$edit_data["image"]."'
+		mysql_query("update products set name = '".$edit_data["name"]."',price = ".$edit_data["price"].",description = '".$edit_data["description"]."', image = '".$edit_data["image"]."', quantity = '".$edit_data["quantity"]."'
 					where id_product = " . $edit_data['id_product']);
 //echo "insert into products(name,price,image) values('".$_POST["nume"]."',".$_POST["pret"].",'".upload_image()."')";
 		
