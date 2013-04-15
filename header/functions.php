@@ -47,7 +47,7 @@
 	function upload_image ()
 	{
 		if (!isset($_FILES) || empty($_FILES))
-			return false;
+			return "img/noImage.jpg";
 
 		$extentions = array("jpg","jpeg","gif","png");
 		$filetypes = array("image/gif","image/jpeg","image/png","image/pjpeg");
@@ -56,7 +56,7 @@
 		$extracted_ext = end($extracted_ext);
 
 		if (!in_array($_FILES["file"]["type"], $filetypes) || !in_array($extracted_ext, $extentions))
-			return false;
+			return "img/noImage.jpg";
 
 		if (file_exists("img/".$_FILES["file"]["name"]))
 			return "img/" . $_FILES["file"]["name"];
