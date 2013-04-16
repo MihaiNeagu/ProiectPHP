@@ -1,6 +1,6 @@
 <?php if (!logged_in())
 echo
-'<form class = "form-horizontal" method = "GET" action = "login.php">
+'<form class = "form-horizontal" method = "POST" action = "login.php">
 	<div class = "control-group">
 		<label class = "control-label" for = "username">Username</label>
 		<div class = "controls">

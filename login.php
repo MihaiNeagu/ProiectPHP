@@ -3,10 +3,10 @@
 	include 'db/connections.php';
 	include 'header/init.php';
 
-	if (isset($_GET) && !empty($_GET))
+	if (isset($_POST) && !empty($_POST))
 	{
-		$username = $_GET['username'];
-		$password = $_GET['password'];
+		$username = $_POST['username'];
+		$password = $_POST['password'];
 
 		$login = log_in($username,$password);
 
