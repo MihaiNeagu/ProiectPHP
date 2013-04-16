@@ -101,9 +101,9 @@ if (isset($_POST["product_id"]))
 
 		//Tin minte ce returneaza upload_image pentru ca
 		//din varii motive nu pot sa verific conditia
-		//$edit_data['image'] = (!isset($_FILES)) ? $edit_data["image"] : upload_image();
+//		$edit_data['image'] = (!isset($_FILES['file']) && !empty($_FILES['file'])) ? $edit_data["image"] : upload_image();
 		$upload_image_success = upload_image();
-		$edit_data['image'] = ($upload_image_success != false) ? $upload_image_success : $edit_data['image'];
+		$edit_data['image'] = ($upload_image_success != "img/noImage.jpg") ? $upload_image_success : $edit_data['image'];
 	
 
 //		echo "update products set name = '".$edit_data["name"]."',price = ".$edit_data["price"].",description = '".$edit_data["description"]."', image = '".$edit_data["image"]."'";
