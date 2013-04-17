@@ -39,7 +39,7 @@
 			    			<h3>'.$name.'</h3> <h4>'.$price.' RON</h4></br>
 			    			'.$quantity_display.'</br>
 			    			<p>'.$description.'</p>
-			    			<input type = "text" name = "quantity" value = "1" />
+			    			<input type = "text" name = "quantity" />
 			    			<input type = "submit" class = "btn btn-primary" value = "Buy" />
 			      			<!-- <a href = "buy.php?product_id='.$id.'"><input type = "button" class = "btn btn-primary" value = "Buy"></a> -->
 			      			<input type = "button" class = "btn btn-info" value = "Info">
@@ -183,6 +183,23 @@
 		else 
 			return false;
 	}
+
+	function log_in_with_SHA1 ($username, $password)
+	{
+		$username = htmlentities(mysql_real_escape_string($username));
+		$password = htmlentities(mysql_real_escape_string($password));
+		
+		$mfa = mysql_fetch_assoc(mysql_query("select user_id from users where username = '$username' and password = '$password'"));
+
+		if (!empty($mfa))
+		{
+			mysql_query("update users set online = 1 where user_id = " . $mfa["user_id"]);
+			return $mfa['user_id'];
+		}
+		else 
+			return false;
+	}
+
 	function log_out ()
 	{
 		mysql_query("update users set online = 0 where user_id = " . $_SESSION["user_id"]);

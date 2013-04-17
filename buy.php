@@ -1,5 +1,6 @@
 <?php
 	include "header/header.php";
+	print_r($_POST);
 	redirect_if_logged_out();
 	if (isset($_POST["product_id"]) && !empty($_POST['product_id']))
 	{
@@ -9,6 +10,7 @@
 			put_error ("Ati mai achizitionat acest produs !");
 		else
 		{
+
 			mysql_query("SET AUTOCOMMIT=0");
 			mysql_query("START TRANSACTION");
 
