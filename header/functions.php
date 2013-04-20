@@ -27,33 +27,29 @@
 	{
 		$quantity_display = ($quantity > 0) ? "<h5 class = 'text-success'>Exista in stoc ".$quantity. " produse !</h5>"
 												: "<h5 class = 'text-error'>Nu mai exista in stoc !</h5>";
-		echo (logged_in()) ? 
-				'<form action = "buy.php" method = "POST">
-				<ul class="thumbnails">
+		$buton_cumpara = '';
+		if (logged_in())
+		{
+			$buton_cumpara = (mysql_num_rows(mysql_query("select * from tranzactii where product_id = " . $id . " and user_id = " . $_SESSION['user_id'])) != 0) ? '' : '<input type = "submit" class = "btn btn-primary" value = "Buy" />';
+		}
+		echo 
+				'
+			<!--	<ul class="thumbnails"> -->
   					<li style = "padding-right:10;"  class="span4">
   						<div class = "thumbnail">
-		    				<a href="#" class="thumbnail">
-		      				<img width = "360" height ="270" src = "'.$image.'" alt = "Imagine Produs" />
-		    				</a>
-		    				<input type = "hidden" name = "product_id" value = "'.$id.'" />
-			    			<h3>'.$name.'</h3> <h4>'.$price.' RON</h4></br>
-			    			'.$quantity_display.'</br>
-			    			<p>'.$description.'</p>
-			    			<input type = "text" name = "quantity" />
-			    			<input type = "submit" class = "btn btn-primary" value = "Buy" />
-			      			<!-- <a href = "buy.php?product_id='.$id.'"><input type = "button" class = "btn btn-primary" value = "Buy"></a> -->
-			      			<input type = "button" class = "btn btn-info" value = "Info">
-		      			</div>
-  					</li>' : 
-  					'<ul class="thumbnails">
-  					<li style = "padding-right:10;" class="span4">
-  						<div class = "thumbnail">
-		    				<a href="#" class="thumbnail">
-		      				<img src = "'.$image.'" alt = "Imagine Produs" />
-		    				</a>
-			    			<h3>'.$name.'</h3> <h4>'.$price.' RON</h4></br>
-			    			<p>'.$description.'</p>
-			      			<input type = "button" class = "btn btn-info" value = "Info">
+  							<form action = "buy.php" method = "POST">
+			    				<a href="#" class="thumbnail">
+			      				<img width = "360" height ="270" src = "'.$image.'" alt = "Imagine Produs" />
+			    				</a>
+			    				<input type = "hidden" name = "product_id" value = "'.$id.'" />
+				    			<h3>'.$name.'</h3> <h4>'.$price.' RON</h4></br>
+				    			'.$quantity_display.'</br>
+				    			<p>'.$description.'</p>
+				    			<input type = "text" name = "quantity" value = "1" />
+				    			'.$buton_cumpara.'
+				      			<!-- <a href = "buy.php?product_id='.$id.'"><input type = "button" class = "btn btn-primary" value = "Buy"></a> -->
+				      			<input type = "button" class = "btn btn-info" value = "Info">
+			      			</form>
 		      			</div>
   					</li>';
 	}

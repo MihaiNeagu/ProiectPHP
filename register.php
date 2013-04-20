@@ -32,6 +32,16 @@ if (!isset($_POST) || sizeof($_POST) == 0) $page_valid = false; ?>
 							validation_error("Emailul nu este valid !");
 							$page_valid = false;
 						}
+						else
+						{
+							$picked_email = mysql_fetch_assoc(mysql_query("select * from users where email = '" . $_POST['email'] . "'"));
+							if (!empty($picked_email))
+								{
+									validation_error('Adresa ' . $_POST['email'] . ' este folosita deja');
+									$page_valid = false;
+								}
+							//echo "select * from users where email = '" . $_POST['email'] . "'";
+						}
 			?>
 		</div>
 	</div>

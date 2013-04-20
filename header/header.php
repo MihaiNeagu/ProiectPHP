@@ -33,6 +33,9 @@
 											?>
 					<!--			<li><a href="mailtest.php">Mail Test</a></li>  -->
 								<li><a href="curs_valutar.php">Curs valutar</a></li>
+					<?php 		if (logged_in() && $user_data['usertype'] == 'user' && !empty($tranzactii_user))
+						  echo '<li><a href="factura.php">Factura</a></li>';
+								?>
 								<li><a href="despre.php">Despre</a></li>
 								<li><a href="contact.php">Contacteaza-ne</a></li>
 							</ul>

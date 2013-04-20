@@ -35,6 +35,7 @@ if (isset($_GET) && !empty($_GET))
 	/*		while ($p =  mysql_fetch_assoc($prod))
 			echo (logged_in()) ? "<div class = 'span4'>".$p["name"]."<br/><a href = 'cauta.php?buy_id=".$p["id_product"]."'>Buy</a></div>"
 							   : "<div class = 'span4'>".$p["name"]."</div>"; */
+			echo '<ul class="thumbnails">';
 			while ($p = mysql_fetch_assoc($prod))
 				if (logged_in())
 					if ($user_data["usertype"] == "administrator")
@@ -43,6 +44,7 @@ if (isset($_GET) && !empty($_GET))
 					render_product ($p["id_product"],$p["name"],$p["price"],$p["description"],$p["image"],$p['quantity']);
 				else
 					render_product ($p["id_product"],$p["name"],$p["price"],$p["description"],$p["image"],$p['quantity']);
+				echo '</ul>';
 
 			?>
 		</div>

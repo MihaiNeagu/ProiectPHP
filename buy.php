@@ -1,6 +1,6 @@
 <?php
 	include "header/header.php";
-	print_r($_POST);
+//	print_r($_POST);
 	redirect_if_logged_out();
 	if (isset($_POST["product_id"]) && !empty($_POST['product_id']))
 	{
@@ -26,7 +26,7 @@
 				//Updatez tabelul produse
 				$old_quantity = mysql_fetch_assoc(mysql_query("select quantity from products where id_product = " . $_POST['product_id']))['quantity'];
 				$new_quantity = $old_quantity - $_POST['quantity'];
-				mysql_query("update products set quantity = " . $new_quantity);
+				mysql_query("update products set quantity = " . $new_quantity . " where id_product = " . $_POST['product_id']);
 
 				mysql_query("COMMIT");
 				mysql_query("SET AUTOCOMMIT=1");

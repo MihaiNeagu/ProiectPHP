@@ -15,7 +15,8 @@ while ($row = mysql_fetch_assoc($useri))
 					echo '<tr>
 					<td></td>
 					<td>'.$row["username"].'</td>
-					<td><a href = "edit_user.php?user_id='.$row["user_id"].'">Editeaza</a></td>
+					<td><a href = "edit_user.php?user_id='.$row["user_id"].'"><input type = "button" class = "btn btn-info" value = "Editeaza"/></a>&nbsp;
+					<a href = "edit_user.php?delete_user_id='.$row["user_id"].'"><input type = "button" class = "btn btn-danger" value = "Sterge"/></a></td>
 				  	</tr>';
 		}
 		echo

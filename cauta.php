@@ -25,7 +25,7 @@ if (!logged_in ()) header('Location: index.php');?>
 if (isset($_GET) && sizeof($_GET) != 0)
 {
 	
-
+	echo '<ul class="thumbnails">';
 	if (isset($_GET["id_product"]) && $_GET["id_product"] != "")
 		mysql_query("delete from products where id_product='".$_GET["id_product"]."'");
 
@@ -37,6 +37,7 @@ if (isset($_GET) && sizeof($_GET) != 0)
 		mysql_query("insert into tranzactii (user_id,product_id) values ('".$_SESSION["user_id"]."', '".$_GET["buy_id"]."')");
 		header("Location: profile_panel.php");
 	}
+	echo '</ul>';
 //	echo "insert into tranzactii (user_id,product_id) values ('".$_SESSION["user_id"]."', '".$_GET["buy_id"]."')";
 
 
